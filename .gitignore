@@ -1,0 +1,18 @@
+# session instructions and permissions stay local
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+# python
+__pycache__/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+# executed notebooks and scratch work
+notebooks/_local/
+.DS_Store
+.ipynb_checkpoints/
+
+# PDFs written by the paper's notebooks (SAVE_PDF = True)
+notebooks/paper/pdf/
+notebooks/paper/auxil/pdf/

@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: >-
+  If you use scanlib in your work, please cite it as below, together with
+  the published methods behind the functions you use.
+title: scanlib
+abstract: >-
+  One-dimensional scanning astrometry: the along-scan instrument model, the
+  back-projection map of the detections, the inverse Radon transform and
+  faststack images of the windows, and the joint window-level likelihood
+  fit, with the paper's pipeline built from them (the per-window reduction,
+  the fits to the detections, the campaign threshold and the search).
+  Arrays in, results out.
+type: software
+authors:
+  - family-names: Shahaf
+    given-names: Sahar
+version: 0.1.0
+date-released: 2026-11-16
+license: MIT
+repository-code: https://github.com/saharsh1/scanlib
+keywords:
+  - astronomy
+  - astrometry
+  - scanning
+  - Gaia
+  - imaging
+  - back-projection

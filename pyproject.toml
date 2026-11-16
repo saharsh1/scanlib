@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scanlib"
+dynamic = ["version"]   # read from scanlib.__version__, the single source
+description = "One-dimensional scanning astrometry: the along-scan instrument model, the back-projection map, the inverse Radon transform and faststack, and the joint window-level likelihood fit, with the paper's pipeline built from them (the per-window reduction, the fits to the detections, the campaign threshold and the search). Arrays in, results out."
+authors = [{name = "Sahar Shahaf", email = "sashahaf@mpia.de"}]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11,<3.13"
+keywords = ["astronomy", "astrometry", "scanning", "gaia", "hipparcos", "imaging", "backprojection", "radon"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Astronomy",
+]
+
+# The two. Every module imports these and the standard library only, at
+# module scope; tests/test_import_closure.py keeps it that way.
+dependencies = [
+    "numpy>=2,<3",
+    "scipy>=1.15,<2",
+]
+
+[project.urls]
+Repository = "https://github.com/saharsh1/scanlib"
+Issues = "https://github.com/saharsh1/scanlib/issues"
+
+[project.optional-dependencies]
+# The notebooks draw; the package does not.
+plots = ["matplotlib>=3.8,<4"]
+notebooks = ["matplotlib>=3.8,<4", "notebook>=7"]
+dev = [
+    "pytest>=7",
+    "matplotlib>=3.8,<4",
+    "notebook>=7",
+    "build>=1.0",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "scanlib.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["scanlib*"]
+
+# The two public GOST scan laws of scanlib.scanlaw, each with its README.
+[tool.setuptools.package-data]
+scanlib = ["data/scanlaw/*/*.csv", "data/scanlaw/*/README.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The slow tests (a margin calibration at 2000 windows per rung, about two
+# minutes) run with `pytest -m slow`.
+markers = ["slow: a long simulation, run with -m slow"]
+addopts = "-m 'not slow'"
