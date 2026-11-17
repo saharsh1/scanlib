@@ -1,7 +1,10 @@
 # scanlib
 
 The method of one-dimensional scanning astrometry: its atoms, and the
-paper's pipeline built from them. A scanning
+paper's pipeline built from them. The paper is Shahaf et al. (2026),
+[*Gaia as a 0.1 arcsec point-source survey across the sky: dynamical scene
+reconstruction from one-dimensional scans*](https://arxiv.org/abs/2611.21510)
+(arXiv:2611.21510). A scanning
 instrument such as Gaia reads out, each time a star crosses its focal
 plane, a short strip of samples along the scan direction: a one-dimensional
 projection of the sky around the star, blurred by the line-spread function.
@@ -158,8 +161,8 @@ Every public function states them in its docstring. The ones that bite:
 
 1. The numbers do not move by accident: `tests/test_baseline.py` compares
    the package's own outputs byte for byte, and
-   `tests/test_reference_cases.py` compares against the development
-   repository's export (below).
+   `tests/test_reference_cases.py` compares against the reference cases
+   (below).
 2. Conventions hold: the projection's cardinal angles, the signs of the
    motion and parallax terms, the unit-area ridge, the half-turn weights,
    the likelihood's constant (`tests/test_conventions.py`).
@@ -170,29 +173,41 @@ Every public function states them in its docstring. The ones that bite:
 
 ## Reference cases
 
-The method was developed in a separate, private repository (`scanlib-dev`),
-which this package replaces. The package is held to that code's outputs by
+The package is held to frozen outputs by
 `tests/reference/reference_cases.npz` and `reference_cases.md`: four
-synthetic scenes rendered by the development code over the first 40
-transits of the public Gaia scan-law forecast for the Pleiades, with its
-outputs of every algorithm here, the joint fit with the primary pinned and
-free, and the stages of the paper's pipeline (the instrument, the scan
-laws, the noise, the per-window reduction, the campaign, the dynamics, the
-search and the thresholds).
-
-**The reference file is the export of the development code at its commit
-`b1c8848`** (exported 2026-11-10; the file's `meta/` arrays name it).
-Fourteen of its arrays are this package's own, re-blessed after corrections
-made here: the ten result arrays of `crowded_field/search` (the search's
-line bookkeeping, and the search returning its last accepted fit's sources)
-and the four `radon/image` arrays (the ramp filter's Nyquist term).
-`reference_cases.md` says what moved.
+synthetic scenes rendered over the first 40 transits of the public Gaia
+scan-law forecast for the Pleiades, with the outputs of every algorithm
+here, the joint fit with the primary pinned and free, and the stages of the
+paper's pipeline (the instrument, the scan laws, the noise, the per-window
+reduction, the campaign, the dynamics, the search and the thresholds).
+`reference_cases.md` lists the arrays and says which were re-blessed, and
+why.
 
 ## Citing
 
-If you use scanlib, cite it with the metadata in
-[`CITATION.cff`](CITATION.cff), and cite the published methods behind the
-functions you use: faststack is Harrison (2011, Exp. Astron. 31, 1).
+If you use scanlib, cite the paper that describes the method,
+[arXiv:2611.21510](https://arxiv.org/abs/2611.21510)
+([`CITATION.cff`](CITATION.cff) holds the same metadata):
+
+```bibtex
+@article{Shahaf2026,
+  author        = {Shahaf, Sahar and Hogg, David W. and El-Badry, Kareem and
+                   Rix, Hans-Walter and Andrae, Ren{\'e}},
+  title         = {{Gaia as a 0.1 arcsec point-source survey across the sky:
+                   dynamical scene reconstruction from one-dimensional scans}},
+  journal       = {arXiv e-prints},
+  year          = {2026},
+  month         = nov,
+  eid           = {arXiv:2611.21510},
+  eprint        = {2611.21510},
+  archivePrefix = {arXiv},
+  primaryClass  = {astro-ph.IM},
+  doi           = {10.48550/arXiv.2611.21510},
+}
+```
+
+Cite also the published methods behind the functions you use: faststack is
+Harrison (2011, Exp. Astron. 31, 1).
 
 ## License
 

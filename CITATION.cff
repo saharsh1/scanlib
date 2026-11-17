@@ -1,7 +1,8 @@
 cff-version: 1.2.0
 message: >-
-  If you use scanlib in your work, please cite it as below, together with
-  the published methods behind the functions you use.
+  If you use scanlib in your work, please cite the paper that describes the
+  method (the preferred citation below), together with the published methods
+  behind the functions you use.
 title: scanlib
 abstract: >-
   One-dimensional scanning astrometry: the along-scan instrument model, the
@@ -25,3 +26,29 @@ keywords:
   - Gaia
   - imaging
   - back-projection
+preferred-citation:
+  type: article
+  title: >-
+    Gaia as a 0.1 arcsec point-source survey across the sky: dynamical
+    scene reconstruction from one-dimensional scans
+  authors:
+    - family-names: Shahaf
+      given-names: Sahar
+    - family-names: Hogg
+      given-names: David W.
+    - family-names: El-Badry
+      given-names: Kareem
+    - family-names: Rix
+      given-names: Hans-Walter
+    - family-names: Andrae
+      given-names: René
+  year: 2026
+  month: 11
+  status: preprint
+  journal: arXiv e-prints
+  identifiers:
+    - type: other
+      value: "arXiv:2611.21510"
+      description: The arXiv identifier of the paper.
+  doi: 10.48550/arXiv.2611.21510
+  url: https://arxiv.org/abs/2611.21510
