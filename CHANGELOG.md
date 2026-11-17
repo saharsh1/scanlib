@@ -31,6 +31,5 @@ modules with two runtime dependencies, numpy and scipy.
   (the three images step by step, and six limitation notebooks) and
   `notebooks/paper/` (Figures 1 to 4, C.1 and C.2 of the paper, the
   Gaia-like kernel, and the simulations behind the paper's numbers).
-- **Tests.** The reference cases of the development code
-  (`tests/reference/`), a byte-for-byte baseline of the package's own
+- **Tests.** The reference cases (`tests/reference/`), a byte-for-byte baseline of the package's own
   outputs, the conventions, the import closure, and the paper notebooks.

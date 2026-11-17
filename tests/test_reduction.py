@@ -2,11 +2,10 @@
 
 Three parts. THE EXPORT: every window of the four reference scenes reduced
 by ``ladder_window`` on the toy instrument with ``TOY_MARGINS`` (k_max 3)
-gives scanlib-dev's order, positions, fluxes, chi^2, rung statistics,
+gives the stored order, positions, fluxes, chi^2, rung statistics,
 Fisher sigmas and delivery mask (``<scene>/reduction/*``), and the first
-200 windows of each rung's null from ``TOY_MARGINS_SEED`` give dev's rung
-statistics (``margins/null/*``). THE RULES, ported from scanlib-dev's own
-tests: the grid solve's active set is relative to its brightest atom and
+200 windows of each rung's null from ``TOY_MARGINS_SEED`` give the stored rung
+statistics (``margins/null/*``). THE RULES: the grid solve's active set is relative to its brightest atom and
 links at one sample pitch; a per-sample sigma solves the whitened
 problem and weights the Fisher matrix; the starting configurations are the ones the
 rule names; the residual start keeps the ladder nested; the ladder accepts
@@ -62,7 +61,7 @@ def ref():
 # ------------------------------------------------------------------ the export
 
 @pytest.mark.parametrize("scene", SCENES)
-def test_every_window_of_the_reference_scenes_reduces_as_dev(ref, scene):
+def test_every_window_of_the_reference_scenes_reduces_as_stored(ref, scene):
     g = lambda key: ref[f"{scene}/{key}"]
     windows, sigma = g("inputs/windows"), float(g("inputs/sigma"))
     for j, samples in enumerate(windows):
@@ -81,11 +80,11 @@ def test_every_window_of_the_reference_scenes_reduces_as_dev(ref, scene):
         assert not g("reduction/delivered")[j, k:].any()
 
 
-def test_the_null_windows_of_both_rungs_are_devs(ref):
+def test_the_null_windows_of_both_rungs_are_the_stored_ones(ref):
     snr = snr_from_peak_snr(50.0, INST)
     assert snr == float(ref["margins/null/snr"])
     assert TOY_MARGINS_SEED == int(ref["margins/null/seed"])
-    # the streams of calibrate_margins (k_max 3); dev spawned three, and the
+    # the streams of calibrate_margins (k_max 3); the export spawned three, and the
     # first two children of a spawn do not depend on how many are spawned
     streams = np.random.default_rng(TOY_MARGINS_SEED).spawn(2)
     for rung in (1, 2):

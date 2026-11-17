@@ -4,7 +4,7 @@ A small synthetic scene is rendered and run through every algorithm, and
 a handful of scalars drawn from the outputs are compared EXACTLY, with
 ``==``, against ``tests/_baseline.py``: a baseline is a record of what the
 code did, and a tolerance would hide the drift it exists to catch. The
-reference-case test compares against the development repository with a
+reference-case test compares against the stored reference cases with a
 tolerance; this one pins this package to itself.
 
 Exact equality is guaranteed only where the libraries round as they did

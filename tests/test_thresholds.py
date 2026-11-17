@@ -3,9 +3,8 @@
 THE EXPORT: ``lrt_threshold`` on both public laws, static and moving, the
 primary pinned and free (``thresholds/{pleiades,beta60}/*``), and the
 maximum of the candidate field in three noise-only campaigns of
-``field_null_max`` (``thresholds/null/*``), reproduced. THE RULES, ported
-from scanlib-dev's tests: the closed form gives the levels dev checked
-against simulated noise (17.07 static and 19.13 moving on the Pleiades law,
+``field_null_max`` (``thresholds/null/*``), reproduced. THE RULES: the
+closed form gives the levels checked against simulated noise (17.07 static and 19.13 moving on the Pleiades law,
 17.31 static on the 95-transit law); a looser false rate lowers the level
 and a wider motion range raises it; with the primary free the level moves by
 less than 0.05; the free metric with the flux column alone is the pinned
@@ -38,7 +37,7 @@ def ref():
 # ------------------------------------------------------------------ the export
 
 @pytest.mark.parametrize("tag, law", [("pleiades", PLEIADES), ("beta60", BETA60)])
-def test_the_thresholds_of_the_export_are_devs(ref, tag, law):
+def test_the_thresholds_of_the_export_are_reproduced(ref, tag, law):
     psi, tau = load_scan_law(law)
     for moving in (False, True):
         for free in (False, True):
@@ -47,7 +46,7 @@ def test_the_thresholds_of_the_export_are_devs(ref, tag, law):
             assert got == pytest.approx(float(ref[key]), rel=RTOL), key
 
 
-def test_the_simulated_null_of_the_export_is_devs(ref):
+def test_the_simulated_null_of_the_export_is_reproduced(ref):
     psi, tau = load_scan_law(PLEIADES)
     seed = int(ref["thresholds/null/seed"])
     for free in (False, True):

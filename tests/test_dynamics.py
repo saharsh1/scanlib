@@ -6,7 +6,7 @@ compressed form of its windows; ``dynamics`` fits the linear relative motion
 motion fit and the cleaning of the moving pair's detection set
 (``moving_pair/dynamics/*``) reproduced, including the bias the blend leaves
 in it (about 2 sigma in each parameter; the joint fit to the windows removes
-it). THE RULES, ported from scanlib-dev's tests: the fits recover an injected
+it). THE RULES: the fits recover an injected
 motion; the cleaning converges, returns the fit on its keep set and drops a
 displaced detection; on Figure 3's scene (a) at seed 14 it removes the one
 detection off the track in two passes; with ``static`` it is one pool, one
@@ -57,7 +57,7 @@ def _harvest(seed, a0, d0, mua, mud, q=0.3):
 
 # ------------------------------------------------------------------ the export
 
-def test_the_motion_fits_of_the_moving_pair_are_devs(ref):
+def test_the_motion_fits_of_the_moving_pair_are_the_stored_ones(ref):
     g = lambda key: ref[f"moving_pair/{key}"]
     psi, tau, eta, sigma, fpar = (g(f"campaign/{k}") for k in ("psi", "t", "eta", "sigma", "fpar"))
     theta, cov, _ = D.fit_motion(psi, tau, eta, sigma, fpar, parallax=True)

@@ -3,11 +3,11 @@
 ``scanlib.scanlaw`` reads the GOST forecasts at the Pleiades centre and at
 ecliptic latitude +60 deg, both over the DR4 span, from the package data.
 The scan angles, the epochs and the along-scan parallax factors must equal
-the arrays scanlib-dev exported (``scanlaw/*`` of the reference cases) to
+the stored arrays (``scanlaw/*`` of the reference cases) to
 the last bit; the four reference scenes use the first 40 transits of the
 Pleiades law. Each file ships with its README, both are declared as
-package data, and the CSVs are scanlib-dev's files byte for byte (their
-SHA-256 below).
+package data, and the CSVs are the files of the reference cases byte for byte
+(their SHA-256 below).
 """
 from __future__ import annotations
 

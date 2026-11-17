@@ -1,18 +1,18 @@
-# Reference cases exported from scanlib-dev
+# Reference cases
 
-Written by `tools/export_reference_cases.py` (its module docstring gives the
-file layout, the scenes, the conventions and how the detections are made).
+Frozen inputs and outputs of four synthetic scenes, exported on 2026-11-10
+from the code this package was ported from (`meta/` records the export).
 Load with `numpy.load`; every array is listed here with its shape, its unit
-and the function that produced it. `tests/test_reference_cases_export.py`
-checks that the file and this table agree.
+and the function that produced it. `tests/test_reference_cases.py` checks
+that the file and this table agree.
 
-**Re-blessed in the shared scanlib.** The ten result arrays of
+**Re-blessed.** The ten result arrays of
 `crowded_field/search` (`positions`, `fluxes`, `Lambda`, `bar`, `accepted`,
 each pinned and `_free`) are this package's, after the correction of the
-search's line bookkeeping; scanlib-dev's export recorded
+search's line bookkeeping; the export recorded
 the search before it. Pinned, the search now accepts C at the fifth rung
-(Lambda 2078) where dev's stopped at the fifth rung (Lambda 0); with the
-primary free it accepts B at the third rung (Lambda 31.3) where dev's fit
+(Lambda 2078) where the export's stopped at the fifth rung (Lambda 0); with the
+primary free it accepts B at the third rung (Lambda 31.3) where the export's fit
 failed (Lambda -6001). Re-blessed again when the search came to
 return the sources of its last accepted joint fit instead of each source's
 own rung: `positions`, `fluxes`, `positions_free` and `fluxes_free` (the
@@ -32,8 +32,7 @@ their peaks. `moving_pair/dynamics/clean_iterations` is re-blessed after the cle
 detections within 30 mas of it, the Huber fit, then the test against the fitted track): 3 passes, was 2; the
 cleaned fit, its covariance and the kept set (`clean_theta`, `clean_cov`, `clean_keep`) are unchanged.
 Every array but these fifteen (the ten of `crowded_field/search` named
-above, the four images and this count) is dev's, byte for byte; `meta/` still names the dev
-commit of the export.
+above, the four images and this count) is the export's, byte for byte; `meta/` records the export.
 
 | array | shape | unit | produced by |
 |---|---|---|---|
@@ -355,7 +354,7 @@ commit of the export.
 | `thresholds/null/seed` | `()` |  | the generator seed of each configuration |
 | `thresholds/null/max_z_pinned` | `(3,)` | 1 | scanlib.search.field_null_max(psi, tau, 3, default_rng(20261111), free_primary=False, inst) on gost_pleiades_centre_dr4span.csv: the largest search statistic per campaign |
 | `thresholds/null/max_z_free` | `(3,)` | 1 | scanlib.search.field_null_max(psi, tau, 3, default_rng(20261111), free_primary=True, inst) on gost_pleiades_centre_dr4span.csv: the largest search statistic per campaign |
-| `meta/scanlib_dev_commit` | `()` |  | git rev-parse HEAD at export |
-| `meta/scanlib_dev_version` | `()` |  | scanlib.__version__ |
+| `meta/source_commit` | `()` |  | git rev-parse HEAD of the exporting code |
+| `meta/source_version` | `()` |  | the exporting code's version |
 | `meta/exported` | `()` |  | the export date |
 | `meta/seed` | `()` |  | the noise seed (SEED + scene index per scene) |

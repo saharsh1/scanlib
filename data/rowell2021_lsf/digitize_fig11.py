@@ -12,8 +12,7 @@ nothing smoothed or renormalized: ``notebooks/paper/auxil/kernel_rowell_lsf.ipyn
     python data/rowell2021_lsf/digitize_fig11.py <the Rowell 2021 PDF>
 
 Needs PyMuPDF (``pymupdf``) to read the embedded image; it is not a dependency of the package. Writes
-``lsf_af29_wc1.csv`` beside this file. The header it writes names the script by its path in the development
-repository, ``docs/provenance/rowell2021_fig11_digitize_20261101.py``, so that the file comes out byte for byte.
+``lsf_af29_wc1.csv`` beside this file.
 """
 import colorsys
 import hashlib
@@ -71,7 +70,7 @@ def main():
     rows = digitize(rgb)
     with OUT.open("w") as f:
         f.write(f"# Rowell et al. 2021, A&A 649, A11, Fig. 11 (AF2-9, window class 1, revolution 3343), digitized by\n"
-                f"# docs/provenance/rowell2021_fig11_digitize_20261101.py from the embedded image (sha256 {sha}).\n"
+                f"# data/rowell2021_lsf/digitize_fig11.py from the embedded image (sha256 {sha}).\n"
                 f"# al_pix: along-scan offset [pixels of 58.9 mas]; lsf: per pixel, the caption's offsets removed.\n"
                 "fov,nu_eff,al_pix,lsf\n")
         for fov, nu, a, l in rows:

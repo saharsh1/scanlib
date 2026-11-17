@@ -1,17 +1,17 @@
 """The search: sources on the sky one at a time, each a likelihood-ratio test.
 
-THE EXPORT: on the three static scenes of scanlib-dev's reference cases
+THE EXPORT: on the three static scenes of the reference cases
 (``<scene>/search/*``), the campaign harvested with ``k_max = 3`` is
 reproduced, and the search on its detections and windows, pinned and with
-the primary free, scores every rung with dev's ``Lambda`` against dev's bar,
+the primary free, scores every rung with the stored ``Lambda`` against the stored bar,
 accepts the same candidates and keeps the same positions and fluxes. The
 score is written as a likelihood ratio, ``Lambda = 2 [ln L(s + 1) -
-ln L(s)]``; dev writes the same number as a drop in chi^2.
+ln L(s)]``; the export wrote the same number as a drop in chi^2.
 
 THE CROWDED FIELD (four sources; in every window one companion within
 0.44 FWHM of the primary along the scan, which a window does not resolve at
 S/N 100). Its search arrays are the shared package's, re-blessed after the
-correction of the line bookkeeping (dev's recorded the search before it,
+correction of the line bookkeeping (the export recorded the search before it,
 when the lines of a source were judged once, against its first fitted
 position). The pool is now rebuilt after every rung against every accepted source at
 its latest fitted position, and no line in it passes through an accepted
@@ -21,7 +21,7 @@ propose D again, and the fit of that candidate takes unmodelled light
 elsewhere. Pinned, the search finds B, C and D and two sources that do not
 exist; free, D twice and B, and not C.
 
-THE RULES, ported from scanlib-dev's tests: a pair yields one source near
+THE RULES: a pair yields one source near
 the truth and the primary alone none; ``max_sources`` caps the search; a
 number replaces the closed-form bar; a drifting companion is found once by
 the moving score and several times by the static one; the assignment floor
@@ -51,7 +51,7 @@ RTOL, ATOL = 1e-9, 1e-12
 INST = Instrument.gaussian(fwhm_mas=100.0, pitch_mas=59.0, n_samples=18, margins=TOY_MARGINS)
 SIGMA = PRIMARY_FLUX / 100.0
 
-# the scenes and seeds of the export (scanlib-dev tools/export_reference_cases.py)
+# the scenes and seeds of the export
 PAIR = Scene.pair(rho_mas=120.0, pa_deg=35.0, q=0.3)
 EXPORT = {
     "static_pair": (PAIR, 20261110),
@@ -91,7 +91,7 @@ def pair():
 # ------------------------------------------------------------------ the export
 
 @pytest.mark.parametrize("name", EXPORT)
-def test_the_searches_of_the_export_are_devs(ref, name):
+def test_the_searches_of_the_export_are_reproduced(ref, name):
     scene, seed = EXPORT[name]
     g = lambda key: ref[f"{name}/search/{key}"]
     assert seed == int(g("seed"))
@@ -106,7 +106,7 @@ def test_the_searches_of_the_export_are_devs(ref, name):
         res = S.map_ladder(g("det_psi"), g("det_eta"), g("det_sigma"), g("windows"), psi, INST,
                            float(g("sigma_noise")), free_primary=free)
         scored = [r for r in res.log if "Lambda" in r]
-        # 2 dlnL against dev's chi^2 drop: the same fits, ln L ~ -3700 nats cancelling, so an
+        # 2 dlnL against the export's chi^2 drop: the same fits, ln L ~ -3700 nats cancelling, so an
         # absolute floor of about 1e-11 on a score that is zero (the crowded field's last rung)
         np.testing.assert_allclose([r["Lambda"] for r in scored], g(f"Lambda{stage}"), rtol=RTOL,
                                    atol=1e-9)
@@ -140,7 +140,7 @@ def test_the_crowded_fields_known_limit(ref, free, expected):
     source kept its own rung's estimate the names were
     ``D, B, false, false, C`` and ``D, D, B``; before the correction of the
     line bookkeeping the pinned search stopped before C (``D, B, false,
-    false``) and the free one after ``D, D`` (scanlib-dev's export)."""
+    false``) and the free one after ``D, D`` (the export)."""
     truth = {"B": (90.0, 60.0), "C": (-140.0, 30.0), "D": (40.0, -170.0)}
     ladder = _crowded_ladder(ref, free)
     names = []

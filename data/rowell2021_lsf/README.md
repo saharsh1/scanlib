@@ -6,8 +6,7 @@ calibrated along-scan LSF of the AF2-9 CCDs, window class 1, at revolution 3343,
 ν_eff = 1.24, 1.36, 1.48, 1.60, 1.72 µm⁻¹, for each telescope (FOV1, FOV2).
 
 **Digitizing.** The figure is a raster embedded in the published PDF (page 14). Each curve was read off it by hue,
-column by column, by the script `digitize_fig11.py` of this folder (the file's header names it by its path in the
-development repository, `docs/provenance/rowell2021_fig11_digitize_20261101.py`); the axes were calibrated on the major
+column by column, by the script `digitize_fig11.py` of this folder; the axes were calibrated on the major
 ticks and the caption's vertical offsets (0.02 per curve) removed. One image pixel is 0.0017 per pixel in the LSF
 (0.4 % of the peak) and 0.038 AL pixels (2.3 mas). The SHA-256 of the embedded image is in the file's header.
 

@@ -1,12 +1,12 @@
-"""The package against the reference cases exported from scanlib-dev.
+"""The package against the reference cases.
 
 ``tests/reference/reference_cases.npz`` holds, for four synthetic scenes
 (a static pair, a moving pair with proper motion and parallax, a crowded
 field of four sources, and the static pair with the windows centred
 ``(3, -2)`` mas off the primary) over the first 40 transits of the public
-Pleiades scan-law forecast, the inputs rendered by the development
-repository and its outputs of every shared algorithm; ``reference_cases.md``
-catalogs the arrays. The joint routines are stored twice, the primary
+Pleiades scan-law forecast, the inputs and the outputs of every shared
+algorithm, exported on 2026-11-10 from the code this package was ported
+from; ``reference_cases.md`` catalogs the arrays. The joint routines are stored twice, the primary
 pinned at the reference position (``truth/theta``, ``fit``, ``loglike``)
 and free (``truth/theta_free``, ``fit_free``, ``loglike_free``); on the
 fourth scene the pinned fit is the wrong model and is stored as such.
@@ -14,12 +14,8 @@ Every shared function runs here on the stored inputs and must
 reproduce the stored outputs to ``rtol=1e-9, atol=1e-12``. The fits
 compare ``theta`` to the stored solution within 1e-3 of its stored 1-sigma
 (two Nelder-Mead runs may differ in the last digits), and the rest of the
-fit to the same tolerance as everything else. ``README.md`` must name the
-dev commit the file came from.
-
-A new export is folded in by replacing the two files, running this test,
-porting what fails, bumping the version and adding the CHANGELOG line
-"synced to scanlib-dev@<hash>".
+fit to the same tolerance as everything else. ``meta/`` records the
+export, and ``reference_cases.md`` names its date.
 """
 from __future__ import annotations
 
@@ -97,16 +93,19 @@ def close(got, expected):
         f"max difference {np.nanmax(np.abs(got - expected)):.3e}")
 
 
-def test_the_file_is_the_export_the_readme_names(ref):
-    commit = str(ref["meta/scanlib_dev_commit"])
-    assert len(commit) >= 7
-    assert commit[:7] in (REPO / "README.md").read_text(encoding="utf-8")
-    assert "scanlib_dev_version" in " ".join(k for k in ref if k.startswith("meta/"))
+def test_the_file_records_its_export(ref):
+    """``meta/`` holds the commit, the version and the date of the export, and
+    the catalog names the date."""
+    assert len(str(ref["meta/source_commit"])) >= 7
+    assert str(ref["meta/source_version"])
+    exported = str(ref["meta/exported"])
+    table = (REPO / "tests" / "reference" / "reference_cases.md").read_text(encoding="utf-8")
+    assert exported in table
 
 
 def test_the_toy_instrument_is_the_exported_one_to_the_last_bit(ref):
-    """``Instrument.gaussian(100, 59, 18, margins=TOY_MARGINS)`` is dev's
-    instrument: every ``instrument/*`` array equal bit for bit."""
+    """``Instrument.gaussian(100, 59, 18, margins=TOY_MARGINS)`` is the
+    exported instrument: every ``instrument/*`` array equal bit for bit."""
     from scanlib.instrument import TOY_MARGINS, TOY_MARGINS_SEED
     g = lambda key: ref[f"instrument/{key}"]
     assert (float(g("fwhm_mas")), float(g("pitch_mas")), int(g("n_samples"))) == (100.0, 59.0, 18)

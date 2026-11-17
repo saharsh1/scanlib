@@ -6,10 +6,10 @@ into one ``DetectionSet``, with no random number and no truth;
 ``simulation.harvest_campaign`` is the two in one call. Three parts.
 
 THE EXPORT: the detection sets of the static and the moving pair of
-scanlib-dev's reference cases (``<scene>/campaign/*``), harvested at the
+the reference cases (``<scene>/campaign/*``), harvested at the
 export's seeds over the first 40 transits of the Pleiades law at S/N 100
 with ``k_max = 2``, reproduced: every detection, its sigma and flux, the
-margins and the census. THE RULES, ported from scanlib-dev's tests: the
+margins and the census. THE RULES: the
 harvest is one render then the pure reduction; the law carries the epochs
 and the parallax factors onto the detections; the reduction is the ladder
 and the delivery rule window by window; the census closes; mismatched
@@ -37,7 +37,7 @@ RTOL, ATOL = 1e-9, 1e-12
 INST = Instrument.gaussian(fwhm_mas=100.0, pitch_mas=59.0, n_samples=18, margins=TOY_MARGINS)
 SIGMA = PRIMARY_FLUX / 100.0                       # S/N 100
 
-# the scenes and seeds of the export (scanlib-dev tools/export_reference_cases.py)
+# the scenes and seeds of the export
 EXPORT = {"static_pair": (Scene.pair(rho_mas=120.0, pa_deg=35.0, q=0.3), False, 20261110),
           "moving_pair": (Scene.pair(rho_mas=150.0, pa_deg=-50.0, q=0.3, pm=(6.0, -4.0), dpi=-5.0),
                           True, 20261111)}
@@ -73,7 +73,7 @@ def ref():
 # ------------------------------------------------------------------ the export
 
 @pytest.mark.parametrize("name", EXPORT)
-def test_the_campaigns_of_the_export_are_harvested_as_dev(ref, name):
+def test_the_campaigns_of_the_export_are_harvested_as_stored(ref, name):
     scene, moving, seed = EXPORT[name]
     assert seed == int(ref[f"{name}/campaign/seed"])
     ds = harvest_campaign(scene, _law(moving), np.random.default_rng(seed), INST, SIGMA, k_max=2)

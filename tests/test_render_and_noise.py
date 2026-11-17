@@ -1,12 +1,12 @@
 """The rendering additions of ``scanlib.instrument`` and the noise module.
 
-Two parts. First, the export of scanlib-dev (``render/*``, ``noise/*`` of
+Two parts. First, the reference cases (``render/*``, ``noise/*`` of
 ``tests/reference/reference_cases.npz``) on the toy instrument
 ``Instrument.gaussian(100, 59, 18, margins=TOY_MARGINS)``: the fine model
 curve, the zero points of 40 windows, the S/N bridge at a peak S/N of 50,
 one noisy window and the per-sample sigma of Fig. 4's noise model, each
 equal to the stored array to the last bit. Second, the contract of each
-function, ported from scanlib-dev's own tests: the forms ``sample_sigma``
+function: the forms ``sample_sigma``
 reads and the ones it refuses, the counts-to-sigma recipe, the frozen
 ``NoiseModel``, the zero points' one uniform draw, and the bridge that
 reproduces the historical sigmas of the peak convention bit for bit.
@@ -30,7 +30,7 @@ INST = Instrument.gaussian(fwhm_mas=100.0, pitch_mas=59.0, n_samples=18, margins
 PITCH = 59.0
 
 # the sigmas of the peak convention (sigma = brightest sample of an isolated source of flux
-# 1000 at eta = 0 on the toy grid, over the peak S/N), as scanlib-dev's tests pin them
+# 1000 at eta = 0 on the toy grid, over the peak S/N)
 OLD_SIGMA = {20.0: 21.772147322158506, 50.0: 8.708858928863402, 100.0: 4.354429464431701,
              300.0: 1.4514764881439004, 1000.0: 0.4354429464431701}
 
