@@ -1,8 +1,7 @@
 # Reproducing the paper
 
 One notebook per figure of the paper and one per simulation behind a number
-of the paper. They depend on the package alone, and they reproduce the
-private development repository's notebooks (scanlib-dev) number for number.
+of the paper. They depend on the package alone.
 
 ## The rules
 
@@ -56,33 +55,6 @@ figures read them.
 | `auxil/sim_lambda_c.ipynb` | Sects. 5.1, 5.2, the campaign threshold Λ_c | Λ_c = 19.13 for Figure 4; 3200 simulated null campaigns per configuration, every false rate at or below 1 % within its interval | 20 s; `FULL` 12 h | `stored/lambda_c_null.npz` |
 | `auxil/sim_lambda_c_validation.ipynb` | Sect. 5.1, the closed form of Λ_c tested away from the paper's case | ten cases (the paper's, and nine that change the scan law, the searched region, the LSF width, or search at rest), 1600 simulated null campaigns each, uniform noise, primary pinned: at the formula's 1 % level every case's false rate agrees with 1 % within its interval, all together 0.98 % [0.83, 1.15]; at its 10 % level the rates are 6.8–9.2 % | 50 s; `FULL` 20 h | `stored/lambda_c_validation.npz` |
 | `auxil/sim_margins_lambda_w.ipynb` | App. A, the margins Λ_w | Δ₁ = 11.1, Δ₂ = 10.8, equal to `TOY_MARGINS` to the last bit | 15 s; `FULL` 20–50 min | `stored/margin_nulls.npz` |
-
-## Against scanlib-dev
-
-The stores are scanlib-dev's files byte for byte, except
-`lambda_c_validation.npz`, which was made here and has no counterpart in dev. Run in the same
-environment, every notebook prints dev's text and draws dev's figures pixel
-for pixel, except in six places:
-
-- `fig2_scans_to_sky`: in the inset of panel (c), one contour label sits one
-  pixel apart (16 pixels). The Δχ² grid is built from the log-likelihood,
-  whose normalizing constant leaves a rounding of 8e-13.
-- `fig2_scans_to_sky`: the band of panel (b), where the pair's noise-free
-  profile has one peak, is drawn in gray 0.935, not dev's 0.965, so that it
-  shows in print (a referee's comment). Nothing else in the figure changes.
-- `fig3_moving_companion`: one printed line names `fit_joint`, the shared
-  package's one fit, where dev named `fit_joint_dynamic`.
-- `fig4_contaminated_binary`: the cell that writes the fit out minimizes
-  −ln L plus half the prior's χ², where `fit_joint` minimizes the χ²: the
-  same minimum, but the optimizer's stopping rule is relative to the
-  objective's size, so it restarts four times instead of twice and agrees
-  with `fit_joint` within 1e-3 of each error bar. The figure uses
-  `fit_joint` and is dev's to the pixel.
-- `fig4_contaminated_binary`: the stopping rung's pool holds 20 lines, where
-  dev's holds 21. The shared search rebuilds the pool after every accepted
-  rung, against the latest fitted positions (CHANGELOG, "the search's line
-  bookkeeping"). The asserts and the figure are dev's.
-- every notebook: matplotlib warnings name the kernel's temporary file.
 
 ## Other environments
 
